@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Daylight field Analysis Explained</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+            * {
+			  margin: 0;
+			  padding: 0;
+			}
+
+			body {
+			  width: 100vw;
+			  position: relative;
+			  font-weight: 100;
+			  font-family: Helvetica;
+			  background-color: rgb(255, 255, 255);
+			  color: rgb(0, 0, 0);
+			  overflow-x: hidden;
+			}
+
+			.content {
+			  width: 100%;
+			  max-width: 1200px;
+			  margin: 1rem auto;
+			  box-sizing: border-box;
+			  padding: 0 2rem;
+			}
+
+			.content p {
+			  font-size: 1.2rem;
+			  line-height: 1.4;
+			  margin-bottom: 2rem;
+			}
+
+			h1 {
+			  font-size: 3rem;
+			  margin-bottom: 3rem;
+			  margin-top: 2rem;
+			  line-height: 1.2;
+			  font-family: Georgia, 'Times New Roman', Times, serif;
+			}
+			
+			.scene {
+			  position: relative;
+			}
+
+			.canvas-parent {
+			  width: 100vw;
+			  height: 100vh;
+			  touch-action: none;
+			  position: sticky;
+			  top: 0;
+			  z-index: -1;
+			}
+
+			canvas {
+			  opacity: 1;
+			}
+
+			.scroller {
+			  top: 0vh;
+			  width: 100vw;
+			  height: 1200vh;
+			  z-index: 2;
+			}
+
+			.caption {
+			  background-color: rgba(0,0,0,0.55);
+			  padding: 2rem;
+			  width: 340px;
+			  position: absolute;
+			}
+
+			.caption p {
+			  color: white;
+			  line-height: 1.5;
+			}
+
+			#c1 {
+			  top: 90vh;
+			  left: 15vw;
+			}
+			#c2 {
+			  top: 180vh;
+			  right: 20vw;
+			}
+			#c3 {
+			  top: 280vh;
+			  left: 20vw;
+			}
+			#c4 {
+			  top: 450vh;
+			  right: 10vw;
+			}
+			#c5 {
+			  top: 600vh;
+			  left: 10vw;
+			}
+			#c6 {
+			  top: 750vh;
+			  right: 10vw;
+			}
+			#c7 {
+			  top: 880vh;
+			  left: 6vw;
+			}
+			#c8 {
+			  top: 990vh;
+			  left: 20vw;
+			}
+
+			#c9 {
+			  top: 1080vh;
+			  left: 6vw;
+			}
+
+			@media (max-width: 1024px) {
+			  #c1, #c2, #c3, #c4, #c5, #c6 {
+				right: auto;
+				left: 5rem;
+			  }
+			}
+
+			@media (max-width:480px) {
+			  #c1, #c2, #c3, #c4, #c5, #c6 { 
+				width: 100%; 
+				box-sizing: border-box; 
+				left: 0;
+			  }
+			}
+
+			#button {
+			  position: fixed;
+			  bottom: 16px;
+			  right: 16px;
+			  padding: 12px;
+			  border-radius: 50%;
+			  margin-bottom: 0px;
+			  background-color: #FFF;
+			  opacity: .9;
+			  z-index: 999;
+			  box-shadow: 0 0 4px rgb(0 0 0 / 15%);
+			}
+
+            #info {
+                position: absolute;
+                left: 5px;
+                top: 5px;
+                background: rgba( 255, 255, 255, 0.1 );
+                padding: 5px;
+                color: rgb(4, 3, 3);
+                border-radius: 2px;
+				white-space: pre;
+            }
+        </style>
+
+	</head>
+
+	<body>
+		<div id="info"></div>
+		<div class='content'>
+			<h1> Daylight field Analysis Explained</h1>
+			<p>
+				Daylight field analysis extends the traditional daylight analysis workflow, providing designers with unique functionalities. 
+				The difference between daylight field analysis and traditional techniques is similar to the difference between a light field camera and a traditional camera. 
+				With a traditional camera, photons are collected at each pixel, and the final cumulative result is recorded. 
+				In contrast, a light field camera collects additional information along the light path, such as the origin of the light and the position 
+				where the light path intersects with the lens. With this information, images taken by a light field camera can be refocused, 
+				and even the perspective of the image can be modified. 
+			</p>
+			<p>
+				Daylight field analysis also collect additional information during the ray tracing process. Let's go through the process of traditional daylight analysis techniques and explore how daylight field analysis can enhance them.
+			</p>
+		  </div>
+
+		  <div class='scene'>
+			<div class='canvas-parent'>
+			</div>
+			<div class='scroller'>
+			  <div class='caption' id='c1'>
+				<p>Daylight anlaysis starts from one sensor in the space.</p>
+			  </div>
+			  <div class='caption' id='c2'>
+				<p>
+				  Using the location solar geometry, sun vectors at different times of a day and a year are tested at the sensor. 
+				  Only the unobstructed vectors are counted. 
+				</p>
+			  </div>
+			  <div class='caption' id='c3'>
+				<p>
+				  With more sensors added to the analysis, more vectors from each of them are tested for obstructions.
+				</p>
+			  </div>
+			  <div class='caption' id='c4'>
+				<p>
+				  The final count of unobstructed vectors and their asociated energy is used to calculate the final daylight results we are familiar with, such as sun hours, spacial daylight atonomy, etc.
+				</p>
+			  </div>
+			  <div class='caption' id='c5'>
+				<p>
+				  As the information is only collected at the sensors. Much information is lost during the light path.
+				</p>
+			  </div>
+			  <div class='caption' id='c6'>
+				<p>
+				  Daylight field analysis collect these lost information during the calculation which is not limited to the sensors. Intersection points of the light rays with the facade and their directions are recorded. 
+				</p>
+			  </div>
+			  <div class='caption' id='c7'>
+				<p>
+				  The density of the points indicates the importance and effectiveness of applying shading across the facade area. 
+				</p>
+			  </div>
+			  <div class='caption' id='c8'>
+				<p>
+				  The direction of the light rays calculates the optimal shading angles on the facade. 
+				</p>
+			  </div>
+
+			  <div class='caption' id='c9'>
+				<p>
+				  Using these additional information on the facade, an optimised shading option could be developed. 
+				</p>
+			  </div>
+			  
+			</div>
+		  </div>
+		  </div>
+
+		  <div class='content'>
+			<p>
+				Daylight field analysis offers several advantages over the traditional daylighting analysis technics due to 
+				its ability to capture more detailed information about the light in a scene. The key benefits are:
+			</p>
+			<p>
+				(1) Anlaysis result is on the design surface such as the facade rather than the typical analysis planes. The results can be used as direct inputs for the facade design development.
+			  In the above case, density of the intersections and direction of the light are used directly to derive the optimal shading.
+			</p>
+			<p>
+			  (2) The rich data captured by the daylight field analysis enables more advanced post-processing techniques. For example, using ray
+			  origins, the weather could be decoupled from the analysis and weather data from a different climate could be applied with no
+			  additional calculation. 
+			</p>
+			<p>
+			  These advantages make daylight field analysis particularly useful for rapid design and optimization of a performance driven
+			  facade and building envelope design. 
+			</p>
+		  </div>
+		<script type="importmap">
+			{
+				"imports": {
+					"three": "./lib/three.module.js",
+					"three/addons/": "https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/",
+					"three/": "https://cdn.jsdelivr.net/npm/three@0.164.1/"
+				}
+			}
+		</script>
+		<script type="module" src="./index.js"></script>
+	</body>
+</html>

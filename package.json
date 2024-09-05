@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "vite": "^5.4.2"
+  },
+  "dependencies": {
+    "gsap": "^3.12.5",
+    "n8ao": "^1.8.4",
+    "three": "^0.167.1",
+    "three-story-controls": "^1.0.6"
+  }
+}
