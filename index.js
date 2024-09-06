@@ -1,11 +1,18 @@
 import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 import { FullScreenQuad } from 'three/addons/postprocessing/Pass.js';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { SMAAPass } from 'three/addons/postprocessing/SMAAPass.js';
+import { OutlinePass } from 'three/addons/postprocessing/OutlinePass.js';
+import GUI from 'three/addons/libs/lil-gui.module.min.js';
+import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 import { CameraRig, ScrollControls, ThreeDOFControls } from 'three-story-controls'
 import {N8AOPass} from "n8ao"
-import cameraData from './camera-data.js'
-import {GLTFLoaderWithMaterial, GLTFLoaderWithAnimation} from './utils.js';
+import cameraData from './lib/camera-data.js'
+import {GLTFLoaderWithMaterial, GLTFLoaderWithAnimation} from './lib/utils.js';
 
 let camera, scene, renderer, controls, composer, rig;
 let depthTexture, depthTexture2, opaqueDepthTexture, smaaPass, n8aopass, outlinePass;
